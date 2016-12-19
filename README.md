@@ -6,6 +6,16 @@
 2. Download key (used for ssh into service)
 3. Make sure the ec2's inbound rules allow your machine or 0.0.0.0/0 (all)
 4. ssh into ec2 instance using key
+5. setup tools
+  ```sh
+  sudo yum install -y git
+  sudo yum update -y
+  sudo -i
+  curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.32.1/install.sh | bash
+  source ~/.bashrc
+  nvm install stable
+  nvm alias default stable
+  ```
 
 ## Install jenkins
 
