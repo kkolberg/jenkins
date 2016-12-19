@@ -45,7 +45,10 @@
   *************************************************************
   ```
     
- 4. Log in
- 5. Install standard plugins
- 6. Change Admin password and username
+4. Log in
+5. Install standard plugins
+6. Change Admin password and username
+7. Install the following plugings:
+  * Dynamic Parameter Plug-in
+  * Environment File Plugin
  
