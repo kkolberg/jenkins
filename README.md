@@ -10,6 +10,7 @@
 ## Install jenkins
 
 1. Run the below commands in terminal:
+
   ```sh
   sudo wget -O /etc/yum.repos.d/jenkins.repo http://pkg.jenkins-ci.org/redhat/jenkins.repo
   sudo rpm --import https://jenkins-ci.org/redhat/jenkins-ci.org.key
@@ -17,14 +18,18 @@
   sudo service jenkins start
   sudo chkconfig jenkins on
   ```
+
 2. In your browser, navigate to the ec2 address with port 8080
 3. It will want a generated password from the log file (may require sudo).
-   ```sh
-   more var/log/jenkins/jenkins.log
-   ```
+  
+  ```sh
+  more var/log/jenkins/jenkins.log
+  ```
+   
    Keep scrolling until you see something like:
-   ```sh
-   *************************************************************
+   
+  ```sh
+  *************************************************************
   *************************************************************
   *************************************************************
 
@@ -39,6 +44,7 @@
   *************************************************************
   *************************************************************
   ```
+    
  4. Log in
  5. Install standard plugins
  6. Change Admin password and username
