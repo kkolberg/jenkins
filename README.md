@@ -9,15 +9,16 @@
 5. setup tools (git, nvm, node, sonar)
 
   ```sh
+  sudo yum update -y
   sudo yum remove -y java
   sudo yum install -y java-1.8.0-openjdk
   sudo yum install -y git
-  sudo yum update -y
   sudo -i
   curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.32.1/install.sh | bash
   source ~/.bashrc
   nvm install stable
   nvm alias default stable
+  sudo iptables -t nat -A PREROUTING -p tcp --dport 80 -j REDIRECT --to-ports 8080
   ```
 
 ## Install jenkins
@@ -27,16 +28,16 @@
   ```sh
   sudo wget -O /etc/yum.repos.d/jenkins.repo http://pkg.jenkins-ci.org/redhat/jenkins.repo
   sudo rpm --import https://jenkins-ci.org/redhat/jenkins-ci.org.key
-  sudo yum install jenkins
+  sudo yum install -y jenkins
   sudo service jenkins start
   sudo chkconfig jenkins on
   ```
 
-2. In your browser, navigate to the ec2 address with port 8080
+2. In your browser, navigate to the ec2 address with port 80
 3. It will want a generated password from the log file (may require sudo).
   
   ```sh
-  more var/log/jenkins/jenkins.log
+  more /var/log/jenkins/jenkins.log
   ```
    
    Keep scrolling until you see something like:
@@ -59,18 +60,18 @@
   ```
     
 4. Log in
-5. Install standard plugins
-6. Change Admin password and username
+5. Change Admin password and username
+6. Install standard plugins
 7. Install the following plugings:
   * Dynamic Parameter Plug-in
-  * Environment File Plugin
+  * Environment Injector Plugin
  
 
 ## Setup sonar
 1. Run the following commands on the ec2 terminal:
 
   ```sh
-  https://sonarsource.bintray.com/Distribution/sonarqube/sonarqube-5.6.4.zip
+  wget https://sonarsource.bintray.com/Distribution/sonarqube/sonarqube-5.6.4.zip
   unzip sonarqube-5.6.4.zip
   rm -rf sonarqube-5.6.4.zip
   sudo mv sonarqube-5.6.4 /usr/local/
@@ -86,16 +87,16 @@
   ```
 
 5. Uncomment and set sonar.jdbc.username, sonar.jdbc.password, and sonar.jdbc.url
-6. Save file
-7. Run the following to start sonar
+7. Save file
+8. Run the following to start sonar
 
   ```sh
   sudo sh /usr/local/sonar/bin/linux-x86-64/sonar.sh start
-  sudo sh /usr/local/sonar/bin/linux-x86-64/sonar.sh stop
+  sudo sh /usr/local/sonar/bin/linux-x86-64/sonar.sh status
   ```
 
   Should say running.
-8. Add SONAR_HOME
+9. Add SONAR_HOME
 
   ```sh
   sudo vi ~/.bash_profile
@@ -108,7 +109,7 @@
   export SONAR_HOME
   ```
 
-9. To setup as a service:
+10. To setup as a service:
 
   ```sh
   sudo touch /etc/init.d/sonar
@@ -144,6 +145,9 @@
   sudo chmod 755 /etc/init.d/sonar
   sudo chkconfig --add sonar
   ```
+11. In your browser go to ec2's address and port 9000.
+12. Default user and password is admin
+13. Setup admin account with real password
 
 ## Setup Sonar-runner
 
@@ -154,5 +158,14 @@
   unzip sonar-runner-dist-2.4.zip
   rm -rf sonar-runner-dist-2.4.zip
   sudo mv sonar-runner-2.4 /usr/local/
-  sudo ln -s /usr/local/sonar-runner-2.4/ /usr/local/sonar-runner
+  sudo ln -s /usr/local/sonar-runner-2.4/bin/sonar-runner /usr/local/sonar-runner
+  sudo vi /usr/local/sonar-runner-2.4/conf/sonar-runner.properties
   ```
+
+2. Set the following:
+
+  ```
+  sonar.host.url=http://localhost:9000
+  sonar.jdbc.url
+  ```
+
