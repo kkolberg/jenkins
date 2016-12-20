@@ -1,9 +1,10 @@
-stage('fetch')
+stage('fetch') {
     node {
         git credentialsId: 'jenkins-git', url: 'git@github.com:gastate/serverless-seed.git'
         stash name: 'serverless-seeder'
     }
-stage('build')
+}
+stage('build') {
     node {
         unstash 'serverless-seeder'
         sh '''npm run globals'''
@@ -15,7 +16,8 @@ stage('build')
         stash 'serverless-seeder'
         junit 'testreports/*jenkins.xml'
     }
-stage('deploy')
+}
+stage('deploy') {
     node {
         withCredentials([
             string(credentialsId: 'AWS_ACCESS_KEY_ID', variable: 'AWS_ACCESS_KEY_ID'), 
@@ -24,3 +26,4 @@ stage('deploy')
             sh '''serverless deploy --stage dev'''
         }
     }
+}
