@@ -12,7 +12,7 @@ stage('build') {
         sh '''npm run jenkins'''
         sh '''npm run sonar'''
         sh '''npm run cover'''
-        sh '''sudo sonar-runner'''
+        sh '''sonar-runner'''
         stash 'serverless-seeder'
         junit 'testreports/*jenkins.xml'
     }
