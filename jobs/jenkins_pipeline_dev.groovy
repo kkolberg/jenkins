@@ -1,6 +1,5 @@
 stage('fetch') {
     node {
-        sh '''ls | grep -v "node_modules" | xargs rm -rf'''
         git credentialsId: 'jenkins-git', url: '$SSH_REPO' 
         if ( '$BRANCH'?.trim() ) {
             git branch: '$BRANCH', credentialsId: 'jenkins-git', url: '$SSH_REPO'
