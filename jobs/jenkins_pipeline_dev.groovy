@@ -21,7 +21,23 @@ stage('deploy') {
         withCredentials([
             string(credentialsId: 'AWS_ACCESS_KEY_ID', variable: 'AWS_ACCESS_KEY_ID'), 
             string(credentialsId: 'AWS_SECRET_ACCESS_KEY', variable: 'AWS_SECRET_ACCESS_KEY')]) {
-            sh '''npm run deploy -- --stage dev'''
-        }
+                sh '''npm run deploy -- --stage dev'''
+
+                try {
+                    echo 'do integration tests'
+                    //do postman stuff here
+                } catch (Exception err) {
+                    def output = sh returnStdout: true, script: "sls deploy list | grep 'Timestamp' | awk '{print \$3}'"
+                    echo output
+                    def stampStrings = output.tokenize("\n")
+                    
+                    if(stampStrings.size()>1) {
+                        def previous = stampStrings.sort()[-2].toString()
+                        sh([script: 'sls rollback --timestamp ' + previous])
+                    }
+
+                    currentBuild.result = 'FAILURE'
+                }
+            }       
     }
 }
