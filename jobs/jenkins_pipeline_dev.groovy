@@ -1,10 +1,10 @@
 stage('fetch') {
     node {
-        git credentialsId: 'jenkins-git', url: '$SSH_REPO'
+        git credentialsId: 'jenkins-git', url: '$SSH_REPO' 
         if ( '$BRANCH'?.trim() ) {
-            sh 'git checkout ' + '$BRANCH'
-            sh 'git reset --hard'
-            sh 'git pull'
+            git credentialsId: 'jenkins-git', url: '$SSH_REPO' branch: '$BRANCH'
+        }else {
+            git credentialsId: 'jenkins-git', url: '$SSH_REPO'
         }
     }
 }
