@@ -2,8 +2,10 @@ stage('fetch') {
     node {
         git credentialsId: 'jenkins-git', url: '$SSH_REPO' 
         if ( '$BRANCH'?.trim() ) {
+            echo 'branch'
             git branch: '$BRANCH', credentialsId: 'jenkins-git', url: '$SSH_REPO'
         }else {
+            echo 'not branch'
             git credentialsId: 'jenkins-git', url: '$SSH_REPO'
         }
     }
