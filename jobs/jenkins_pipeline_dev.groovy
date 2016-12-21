@@ -1,6 +1,9 @@
 stage('fetch') {
     node {
         git credentialsId: 'jenkins-git', url: '$SSH_REPO'
+        if ( $BRANCH?.trim() ) {
+            sh '''git checkout $'BRANCH'''
+        }
     }
 }
 stage('build and test') {
