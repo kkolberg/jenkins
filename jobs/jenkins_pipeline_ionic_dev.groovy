@@ -13,6 +13,7 @@ stage('build') {
         sh '''npm run globals'''
         sh '''npm install'''
         sh '''npm run ionic:build'''
+        sh '''ionic add platform android'''
         sh '''ionic build android --release'''
     }
 }
