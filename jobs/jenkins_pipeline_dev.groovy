@@ -37,7 +37,9 @@ stage('integration tests') {
             string(credentialsId: 'AWS_SECRET_ACCESS_KEY', variable: 'AWS_SECRET_ACCESS_KEY')]) {
                 try {
                     echo 'do integration tests'
-                    //do postman stuff here
+                    if(fileExists 'integration/integration.json'){ 
+                        sh '''newman run integration/integration.json'''
+                    }
                 } catch (Exception err) {
                     def output = sh returnStdout: true, script: "sls deploy list | grep 'Timestamp' | awk '{print \$3}'"
                     echo output
