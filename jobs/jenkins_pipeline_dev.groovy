@@ -8,10 +8,14 @@ stage('fetch') {
         }
     }
 }
-stage('build and test') {
+stage('build') {
     node {
         sh '''npm run globals'''
-        sh '''npm run sonar'''
+        sh '''npm run build'''
+    }
+}
+stage('code quality') {
+    node {
         sh '''sonar-runner'''
         junit 'testreports/*jenkins.xml'
     }
@@ -22,7 +26,14 @@ stage('deploy') {
             string(credentialsId: 'AWS_ACCESS_KEY_ID', variable: 'AWS_ACCESS_KEY_ID'), 
             string(credentialsId: 'AWS_SECRET_ACCESS_KEY', variable: 'AWS_SECRET_ACCESS_KEY')]) {
                 sh '''npm run deploy -- --stage dev'''
-
+            }       
+    }
+}
+stage('integration tests') {
+    node {
+        withCredentials([
+            string(credentialsId: 'AWS_ACCESS_KEY_ID', variable: 'AWS_ACCESS_KEY_ID'), 
+            string(credentialsId: 'AWS_SECRET_ACCESS_KEY', variable: 'AWS_SECRET_ACCESS_KEY')]) {
                 try {
                     echo 'do integration tests'
                     //do postman stuff here
@@ -38,6 +49,6 @@ stage('deploy') {
 
                     currentBuild.result = 'FAILURE'
                 }
-            }       
+            }
     }
 }
