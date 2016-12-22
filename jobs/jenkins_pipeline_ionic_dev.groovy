@@ -18,9 +18,9 @@ stage('build') {
 }
 stage('code quality') {
     node {
-        sh '''npm run sonar'''
-        sh '''sonar-runner'''
-        junit 'testreports/*jenkins.xml'
+        // sh '''npm run sonar'''
+        // sh '''sonar-runner'''
+        // junit 'testreports/*jenkins.xml'
     }
 }
 stage('deploy') {
