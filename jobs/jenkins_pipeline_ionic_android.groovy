@@ -1,10 +1,11 @@
-stage 'fetch'
+stage('fetch') {
     node {
         git credentialsId: 'jenkins', url: 'git@github.com:kkolberg/prototypes.git'
         sh '''ls'''
         stash name: 'ionic'
     }
-stage 'install'
+}
+stage('install') {
     node {
         unstash 'ionic'
         dir('HelloLambda') {
@@ -12,7 +13,8 @@ stage 'install'
         }
         stash 'ionic'
     }
-stage 'build'
+}
+stage('build') {
     node {
         unstash 'ionic'
         dir('HelloLambda') {
@@ -20,3 +22,4 @@ stage 'build'
         }
         stash 'ionic'
     }
+}
