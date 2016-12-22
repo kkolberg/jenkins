@@ -16,6 +16,7 @@ stage('build') {
 }
 stage('code quality') {
     node {
+        sh '''npm run sonar'''
         sh '''sonar-runner'''
         junit 'testreports/*jenkins.xml'
     }
@@ -37,7 +38,7 @@ stage('integration tests') {
             string(credentialsId: 'AWS_SECRET_ACCESS_KEY', variable: 'AWS_SECRET_ACCESS_KEY')]) {
                 try {
                     echo 'do integration tests'
-                    if(fileExists 'integration/integration.json'){ 
+                    if(fileExists('integration/integration.json')) { 
                         sh '''newman run integration/integration.json'''
                     }
                 } catch (Exception err) {
