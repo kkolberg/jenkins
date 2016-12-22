@@ -4,10 +4,9 @@ stage('fetch') {
         sh '''git checkout tags/$TAG'''
     }
 }
-stage('build and test') {
+stage('build') {
     node {
-        sh '''npm run jenkins'''
-        junit 'starter/testreports/*.xml'
+        sh '''npm run build'''
     }
 }
 stage('deploy') {
