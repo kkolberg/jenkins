@@ -11,7 +11,8 @@ stage('fetch') {
 stage('build') {
     node {
         sh '''npm run globals'''
-        sh '''npm run build'''
+        sh '''npm run ionic:build'''
+        sh '''ionic build android --release'''
     }
 }
 stage('code quality') {
