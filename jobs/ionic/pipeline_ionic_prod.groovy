@@ -5,7 +5,7 @@ stage('deploy') {
             string(credentialsId: 'AWS_SECRET_ACCESS_KEY', variable: 'AWS_SECRET_ACCESS_KEY')]) {
                 def output = sh returnStdout: true, script: "aws s3 ls ${BUCKET}/stage/${TAG} | wc -l"
                 echo output
-                if(output == "1"){
+                if(output as Integer  == 1){
                     sh '''aws s3 sync s3://$BUCKET/stage/$TAG s3://$BUCKET/live --delete'''
                 }else{
                     currentBuild.result = 'FAILURE'
