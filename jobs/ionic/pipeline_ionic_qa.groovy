@@ -21,10 +21,11 @@ stage('code quality') {
 stage('update environment'){
     node {
         sh '''echo "@@@@ Setting Environment Variables File for QA @@@@"'''
-        sh '''rm www/assets/json/student-resources.json'''
-        sh '''rm www/assets/json/student-resources.dev.json'''
-        sh '''rm www/assets/json/student-resources.prod.json'''
-        sh '''mv www/assets/json/student-resources.qa.json src/assets/json/student-resources.json'''
+        sh '''cat ./www/assets/json/studetn-resouces.qa.json'''
+        sh '''rm ./www/assets/json/student-resources.json'''
+        sh '''rm ./www/assets/json/student-resources.dev.json'''
+        sh '''rm ./www/assets/json/student-resources.prod.json'''
+        sh '''mv ./www/assets/json/student-resources.qa.json src/assets/json/student-resources.json'''
     }
 }
 stage('deploy') {
