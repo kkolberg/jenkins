@@ -21,12 +21,6 @@ stage('code quality') {
 stage('update environment'){
     node {
         echo '@@@@ Setting Environment Variables File for QA @@@@'
-        if (fileExists('./www/assets/json/student-resources.json')) {
-            echo 'Located student-resources file'
-        } else {
-            echo 'Unable to locate student-resources file'
-        }
-        sh "pwd"
         sh "rm ./www/assets/json/student-resources.json"
         sh "rm ./www/assets/json/student-resources.dev.json"
         sh "rm ./www/assets/json/student-resources.prod.json"
