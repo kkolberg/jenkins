@@ -18,6 +18,15 @@ stage('code quality') {
         // junit 'testreports/*jenkins.xml'
     }
 }
+stage('update environment'){
+    node {
+        echo '@@@@ Setting Environment Variables File for PROD @@@@'
+        sh "rm ./www/assets/json/student-resources.json"
+        sh "rm ./www/assets/json/student-resources.dev.json"
+        sh "rm ./www/assets/json/student-resources.qa.json"
+        sh "mv ./www/assets/json/student-resources.prod.json ./www/assets/json/student-resources.json"
+    }
+}
 stage('deploy') {
     //TO-DO!  When prod credentials are created.  Go into Jenkins > Credentials, add new secret text and then replace AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY to the contstant named in the new credentials
     node {
