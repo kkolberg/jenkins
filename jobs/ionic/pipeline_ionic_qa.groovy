@@ -18,6 +18,11 @@ stage('code quality') {
         // junit 'testreports/*jenkins.xml'
     }
 }
+stage('update environment'){
+    node {
+        sh '''cp src/assets/json/student-resources.qa.json src/assets/json/student-resources.json'''
+    }
+}
 stage('deploy') {
     node {
         withCredentials([
