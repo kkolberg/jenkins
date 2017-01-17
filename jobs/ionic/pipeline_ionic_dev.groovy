@@ -28,6 +28,10 @@ stage('update environment'){
         sh "rm ./www/assets/json/student-resources.qa.json"
         sh "rm ./www/assets/json/student-resources.prod.json"
         sh "mv ./www/assets/json/student-resources.dev.json ./www/assets/json/student-resources.json"
+        sh "rm ./www/assets/json/env.json"
+        sh "rm ./www/assets/json/env.qa.json"
+        sh "rm ./www/assets/json/env.prod.json"
+        sh "mv ./www/assets/json/env.dev.json ./www/assets/json/env.json"
     }
 }
 stage('deploy') {
