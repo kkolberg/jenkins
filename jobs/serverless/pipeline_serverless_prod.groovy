@@ -16,6 +16,15 @@ stage('code quality') {
         junit 'testreports/*jenkins.xml'
     }
 }
+stage('update environment'){
+    node {
+        echo '@@@@ Setting Environment Variables File for PROD @@@@'
+        sh "rm ./deploy.env.yml"
+        sh "rm ./deploy.env.dev.yml
+        sh "rm ./deploy.env.qa.yml
+        sh "mv ./deploy.env.prod.yml ./deploy.env.yml"
+    }
+}
 stage('deploy') {
     node {
         withCredentials([
