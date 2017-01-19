@@ -25,6 +25,7 @@ stage('deploy') {
             string(credentialsId: 'PROD_AWS_ACCESS_KEY_ID', variable: 'AWS_ACCESS_KEY_ID'),
             string(credentialsId: 'PROD_AWS_SECRET_ACCESS_KEY', variable: 'AWS_SECRET_ACCESS_KEY')]) {
             withEnv(['NODE_ENV=production', 'IS_NOT_LOCAL=true', 'TAG=$TAG']) {
+                echo 'Deploy Tag $TAG'
                 sh '''npm run deploy -- --stage prod'''
             }
         }
