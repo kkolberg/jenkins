@@ -25,7 +25,6 @@ stage('update environment'){
     }
 }
 stage('deploy') {
-    //TO-DO!  When prod credentials are created.  Go into Jenkins > Credentials, add new secret text and then replace AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY to the contstant named in the new credentials
     node {
         withCredentials([
             string(credentialsId: 'PROD_AWS_ACCESS_KEY_ID', variable: 'AWS_ACCESS_KEY_ID'),
