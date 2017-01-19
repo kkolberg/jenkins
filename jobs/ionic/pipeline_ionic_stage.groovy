@@ -28,8 +28,8 @@ stage('deploy') {
     //TO-DO!  When prod credentials are created.  Go into Jenkins > Credentials, add new secret text and then replace AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY to the contstant named in the new credentials
     node {
         withCredentials([
-            string(credentialsId: 'AWS_ACCESS_KEY_ID', variable: 'AWS_ACCESS_KEY_ID'),
-            string(credentialsId: 'AWS_SECRET_ACCESS_KEY', variable: 'AWS_SECRET_ACCESS_KEY')]) {
+            string(credentialsId: 'PROD_AWS_ACCESS_KEY_ID', variable: 'AWS_ACCESS_KEY_ID'),
+            string(credentialsId: 'PROD_AWS_SECRET_ACCESS_KEY', variable: 'AWS_SECRET_ACCESS_KEY')]) {
                 sh '''aws s3 sync ./www s3://$BUCKET/$TAG/ --delete'''
             }
     }
