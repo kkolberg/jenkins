@@ -11,13 +11,6 @@ stage('build') {
         sh '''npm run ionic:build'''
     }
 }
-stage('code quality') {
-    node {
-        // sh '''npm run sonar'''
-        // sh '''sonar-runner'''
-        // junit 'testreports/*jenkins.xml'
-    }
-}
 stage('update environment'){
     node {
         echo '@@@@ Setting Environment Variables File for PROD @@@@'
