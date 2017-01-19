@@ -10,12 +10,6 @@ stage('build') {
         sh '''npm run build'''
     }
 }
-stage('code quality') {
-    node {
-        sh '''npm run jenkins'''
-        junit 'testreports/*jenkins.xml'
-    }
-}
 stage('update environment'){
     node {
         echo '@@@@ Setting Environment Variables File for PROD @@@@'
