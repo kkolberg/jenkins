@@ -20,7 +20,7 @@ stage('update environment'){
         echo '@@@@ Setting Environment Variables File for QA @@@@'
         sh "rm ./deploy.env.yml"
         sh "rm ./deploy.env.dev.yml"
-        sh "rm ./deploy.env.qa.yml"
+        sh "rm ./deploy.env.prod.yml"
         sh "mv ./deploy.env.qa.yml ./deploy.env.yml"
     }
 }
