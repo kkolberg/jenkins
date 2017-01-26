@@ -15,7 +15,6 @@ stage('update environment'){
     node {
         echo '@@@@ Setting Environment Variables File for PROD @@@@'
         sh "rm ./www/assets/json/env.json"
-        sh "rm ./www/assets/json/env.sandbox.json"
         sh "rm ./www/assets/json/env.qa.json"
         sh "rm ./www/assets/json/env.dev.json"
         sh "mv ./www/assets/json/env.prod.json ./www/assets/json/env.json"        
