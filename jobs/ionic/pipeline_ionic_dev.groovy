@@ -9,10 +9,9 @@ stage('fetch') {
 }
 stage('build') {
     node {
-        sh "npm run globals"
-        sh "npm install"
-        sh "npm run ionic:build"
-        sh "cordova platform add browser"
+        sh '''npm run globals'''
+        sh '''npm install'''
+        sh '''npm run ionic:build'''
     }
 }
 stage('code quality') {
@@ -25,14 +24,14 @@ stage('code quality') {
 stage('update environment'){
     node {
         echo '@@@@ Setting Environment Variables File for DEV @@@@'
-        sh "rm ./platforms/browser/www/assets/json/student-resources.json"
-        sh "rm ./platforms/browser/www/assets/json/student-resources.qa.json"
-        sh "rm ./platforms/browser/www/assets/json/student-resources.prod.json"
-        sh "mv ./platforms/browser/www/assets/json/student-resources.dev.json ./platforms/browser/www/assets/json/student-resources.json"
-        sh "rm ./platforms/browser/www/assets/json/env.json"
-        sh "rm ./platforms/browser/www/assets/json/env.qa.json"
-        sh "rm ./platforms/browser/www/assets/json/env.prod.json"
-        sh "mv ./platforms/browser/www/assets/json/env.dev.json ./platforms/browser/www/assets/json/env.json"
+        sh "rm ./www/assets/json/student-resources.json"
+        sh "rm ./www/assets/json/student-resources.qa.json"
+        sh "rm ./www/assets/json/student-resources.prod.json"
+        sh "mv ./www/assets/json/student-resources.dev.json ./www/assets/json/student-resources.json"
+        sh "rm ./www/assets/json/env.json"
+        sh "rm ./www/assets/json/env.qa.json"
+        sh "rm ./www/assets/json/env.prod.json"
+        sh "mv ./www/assets/json/env.dev.json ./www/assets/json/env.json"
     }
 }
 stage('deploy') {
@@ -40,7 +39,7 @@ stage('deploy') {
         withCredentials([
             string(credentialsId: 'AWS_ACCESS_KEY_ID', variable: 'AWS_ACCESS_KEY_ID'),
             string(credentialsId: 'AWS_SECRET_ACCESS_KEY', variable: 'AWS_SECRET_ACCESS_KEY')]) {
-                sh '''aws s3 sync ./platforms/browser/www s3://$BUCKET --delete'''
+                sh '''aws s3 sync ./www s3://$BUCKET --delete'''
             }
     }
 }
