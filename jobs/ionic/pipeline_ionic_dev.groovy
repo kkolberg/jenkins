@@ -9,11 +9,11 @@ stage('fetch') {
 }
 stage('build') {
     node {
-        sh '''npm run globals'''
-        sh '''npm install'''
-        sh '''npm run ionic:'build browser''
-        sh '''rm -R ./www'''
-        sh '''cp -R ./platforms/browser/www ./www'''
+        sh "npm run globals"
+        sh "npm install"
+        sh "npm run ionic:build browser"
+        sh "rm -R ./www"
+        sh "cp -R ./platforms/browser/www ./www"
     }
 }
 stage('code quality') {
