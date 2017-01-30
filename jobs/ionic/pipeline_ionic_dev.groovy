@@ -11,6 +11,7 @@ stage('build') {
     node {
         sh "npm run globals"
         sh "npm install"
+        sh "npm run ionic:platform add browser"
         sh "npm run ionic:build browser"
         sh "rm -R ./www"
         sh "ls"
