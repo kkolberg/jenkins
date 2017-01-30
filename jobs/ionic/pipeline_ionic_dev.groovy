@@ -13,6 +13,8 @@ stage('build') {
         sh "npm install"
         sh "npm run ionic:build browser"
         sh "rm -R ./www"
+        sh "ls"
+        sh "ls ./platforms"
         sh "cp -R ./platforms/browser/www ./www"
     }
 }
