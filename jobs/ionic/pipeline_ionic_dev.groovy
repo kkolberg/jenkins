@@ -9,9 +9,10 @@ stage('fetch') {
 }
 stage('build') {
     node {
-        sh '''npm run globals'''
-        sh '''npm install'''
-        sh '''npm run ionic:build'''
+        sh "npm run globals"
+        sh "npm install"
+        sh "npm run ionic:build"
+        sh "echo '' > ./www/cordova.js"
     }
 }
 stage('code quality') {
