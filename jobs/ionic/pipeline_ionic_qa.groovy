@@ -9,6 +9,7 @@ stage('build') {
         sh '''npm run globals'''
         sh '''npm install'''
         sh '''npm run ionic:build'''
+        sh "echo '' > ./www/cordova.js"
     }
 }
 stage('code quality') {
@@ -29,6 +30,9 @@ stage('update environment'){
         sh "rm ./www/assets/json/env.dev.json"
         sh "rm ./www/assets/json/env.prod.json"
         sh "mv ./www/assets/json/env.qa.json ./www/assets/json/env.json"
+        sh "rm ./www/assets/json/settings.json"
+        sh "rm ./www/assets/json/settings.local.json"
+        sh "mv ./www/assets/json/settings.aws.json ./www/assets/json/settings.json"
     }
 }
 stage('deploy') {
