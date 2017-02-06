@@ -1,6 +1,5 @@
 stage('fetch') {
     node {
-        git credentialsId: 'jenkins-git', url: '$SSH_REPO' 
         if ( '$BRANCH'?.trim() ) {
             git branch: '$BRANCH', credentialsId: 'jenkins-git', url: '$SSH_REPO'
         }else {
@@ -13,8 +12,8 @@ stage('build') {
         sh '''npm run globals'''
         sh '''npm install'''
         sh '''npm run ionic:build'''
-        sh '''ionic platform add android'''
-        sh '''ionic build android --release'''
+        //sh '''ionic platform add android'''
+        //sh '''ionic build android --release'''
     }
 }
 stage('code quality') {
@@ -26,6 +25,6 @@ stage('code quality') {
 }
 stage('deploy') {
     node {
-        
+
     }
 }
