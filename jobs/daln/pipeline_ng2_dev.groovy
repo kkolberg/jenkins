@@ -19,7 +19,7 @@ stage('deploy') {
         withCredentials([
             string(credentialsId: 'DALN_AWS_KEY_ID_DEV', variable: 'DALN_AWS_KEY_ID_DEV'),
             string(credentialsId: 'DALN_AWS_SECRET_KEY_DEV', variable: 'DALN_AWS_SECRET_KEY_DEV')]) {
-                sh '''aws s3 sync ./www s3://$BUCKET --delete'''
+                sh '''aws s3 sync ./dist s3://$BUCKET --delete'''
             }
     }
 }
