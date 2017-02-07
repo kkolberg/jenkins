@@ -11,12 +11,12 @@ stage('update environment'){
         sh "rm ./environments/environment.prod.ts"
     }
 }
-// ng build --prod is failing so working around by swapping env files
+
 stage('build') {
     node {
         sh '''npm run globals'''
         sh '''npm install'''
-        sh '''npm run buildDev'''
+        sh '''npm run buildProd'''
     }
 }
 stage('deploy') {
