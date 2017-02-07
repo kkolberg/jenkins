@@ -4,14 +4,6 @@ stage('fetch') {
         sh '''git checkout tags/$TAG'''
     }
 }
-stage('update environment'){
-    node {
-        echo '@@@@ Setting Environment Variables File for STAGE @@@@'
-        sh "mv ./environments/environment.prod.ts ./environments/environment.ts"
-        sh "rm ./environments/environment.prod.ts"
-    }
-}
-
 stage('build') {
     node {
         sh '''npm run globals'''
