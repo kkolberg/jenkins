@@ -8,7 +8,7 @@ stage('build') {
     node {
         sh '''npm run globals'''
         sh '''npm install'''
-        sh '''ng build -prod'''
+        sh '''npm run buildProd'''
     }
 }
 
