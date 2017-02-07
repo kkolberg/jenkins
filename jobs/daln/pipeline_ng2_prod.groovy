@@ -1,25 +1,15 @@
-stage('fetch') {
-    node {
-        if ( '$BRANCH'?.trim() ) {
-            git branch: '$BRANCH', credentialsId: 'jenkins-git', url: '$SSH_REPO'
-        }else {
-            git credentialsId: 'jenkins-git', url: '$SSH_REPO'
-        }
-    }
-}
-stage('build') {
-    node {
-        sh "npm run globals"
-        sh "npm install"
-        sh "npm run buildProd"
-    }
-}
 stage('deploy') {
     node {
         withCredentials([
             string(credentialsId: 'DALN_AWS_KEY_ID_PROD', variable: 'AWS_ACCESS_KEY_ID'),
             string(credentialsId: 'DALN_AWS_SECRET_KEY_PROD', variable: 'AWS_SECRET_ACCESS_KEY')]) {
-                sh '''aws s3 sync ./dist s3://$BUCKET --delete'''
+                def output = sh returnStdout: true, script: "aws s3 ls ${STAGE_BUCKET}/${TAG} | wc -l"
+                echo output
+                if(output as Integer == 1){
+                    sh '''aws s3 sync s3://$STAGE_BUCKET/$TAG/ s3://$BUCKET/ --delete'''
+                }else{
+                    currentBuild.result = 'FAILURE'
+                }
             }
     }
 }
