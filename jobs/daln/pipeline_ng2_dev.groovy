@@ -13,9 +13,9 @@ stage('build') {
             sh "npm run globals"
             sh "npm install"
             sh "npm run buildDev"
-            emailext attachLog: true, body: 'Daln Build Successful.', recipientProviders: [[$class: 'DevelopersRecipientProvider']], subject: 'Build Success', to: 'appdevmgr@gsu.edu'
+            emailext attachLog: true, body: 'Daln Build Successful.', recipientProviders: [[$class: 'DevelopersRecipientProvider']], subject: 'Build Success', to: 'appdevmgr@gsu.edu', 'wmomen1@mygsu.onmicrosoft.com'
         } catch(e){
-            emailext attachLog: true, body: 'There is a build failure.', recipientProviders: [[$class: 'FailingTestSuspectsRecipientProvider'], [$class: 'FirstFailingBuildSuspectsRecipientProvider']], subject: 'Build Failure', to: 'appdevmgr@gsu.edu'
+            emailext attachLog: true, body: 'There is a build failure.', recipientProviders: [[$class: 'FailingTestSuspectsRecipientProvider'], [$class: 'FirstFailingBuildSuspectsRecipientProvider']], subject: 'Build Failure', to: 'appdevmgr@gsu.edu', 'wmomen1@mygsu.onmicrosoft.com'
         }   
     }
 }
