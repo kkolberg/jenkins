@@ -23,3 +23,6 @@ stage('deploy') {
             }
     }
 }
+stage('notify'){
+    emailext attachLog: true, body: 'There is a build failure.', recipientProviders: [[$class: 'FailingTestSuspectsRecipientProvider'], [$class: 'FirstFailingBuildSuspectsRecipientProvider']], subject: 'Build Failure', to: 'appdevmgr@gsu.edu'
+}
