@@ -1,8 +1,8 @@
 stage('deploy') {
     node {
         withCredentials([
-            string(credentialsId: 'DALN_AWS_KEY_ID_PROD', variable: 'AWS_ACCESS_KEY_ID'),
-            string(credentialsId: 'DALN_AWS_SECRET_KEY_PROD', variable: 'AWS_SECRET_ACCESS_KEY')]) {
+            string(credentialsId: 'DALN_AWS_KEY_ID', variable: 'AWS_ACCESS_KEY_ID'),
+            string(credentialsId: 'DALN_AWS_SECRET_KEY', variable: 'AWS_SECRET_ACCESS_KEY')]) {
                 def output = sh returnStdout: true, script: "aws s3 ls ${STAGE_BUCKET}/${TAG} | wc -l"
                 echo output
                 if(output as Integer == 1){
