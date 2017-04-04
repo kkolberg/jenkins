@@ -9,7 +9,7 @@ stage('deploy') {
         withCredentials([
             string(credentialsId: 'PROD_AWS_ACCESS_KEY_ID', variable: 'AWS_ACCESS_KEY_ID'),
             string(credentialsId: 'PROD_AWS_SECRET_ACCESS_KEY', variable: 'AWS_SECRET_ACCESS_KEY')]) {
-                sh '''aws s3 sync ./ s3://$BUCKET/$TAG/ --delete'''
+                sh '''aws s3 sync ./ s3://$BUCKET/$TAG/ --delete --exclude ".git*"'''
             }
     }
 }
