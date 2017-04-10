@@ -1,6 +1,6 @@
 stage('fetch') {
     node {
-         git branch: 'deploy', credentialsId: 'jenkins-git', url: '$SSH_REPO'
+         git branch: 'master', credentialsId: 'jenkins-git', url: '$SSH_REPO'
         sh '''git checkout tags/$TAG'''
     }
 }
