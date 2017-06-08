@@ -9,6 +9,7 @@ stage('fetch') {
 }
 stage('build') {
     node {
+        sh "pwd"
         sh "npm run globals"
         sh "npm install"
         sh "npm run ionic:build"
