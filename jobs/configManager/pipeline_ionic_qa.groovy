@@ -4,6 +4,15 @@ stage('fetch') {
             git branch: 'live', credentialsId: 'jenkins-git', url: '$SSH_REPO'
           }
 }
+stage('update environment service'){
+    node {
+        echo '@@@@ Setting Environment Variables File for DEV @@@@'
+        sh "rm ./src/services/env.service.ts"
+        sh "rm ./src/services/env.service.dev.ts"
+        sh "rm ./src/services/env.service.prod.ts"
+        sh "mv ./src/services/env.service.qa.ts ./src/services/env.service.ts"   
+    }
+}
 stage('build') {
     node {
         sh '''npm run globals'''
@@ -17,15 +26,6 @@ stage('code quality') {
         // sh '''npm run sonar'''
         // sh '''sonar-runner'''
         // junit 'testreports/*jenkins.xml'
-    }
-}
-stage('update environment'){
-    node {
-        echo '@@@@ Setting Environment Variables File for QA @@@@'
-        sh "rm ./www/assets/json/env.json"
-        sh "rm ./www/assets/json/env.dev.json"
-        sh "rm ./www/assets/json/env.prod.json"
-        sh "mv ./www/assets/json/env.qa.json ./www/assets/json/env.json"
     }
 }
 stage('deploy') {
