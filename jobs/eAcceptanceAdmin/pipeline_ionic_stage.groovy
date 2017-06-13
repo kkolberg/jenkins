@@ -4,21 +4,21 @@ stage('fetch') {
         sh '''git checkout tags/$TAG'''
     }
 }
+stage('update environment service'){
+    node {
+        echo '@@@@ Setting Environment Variables File for DEV @@@@'
+        sh "rm ./src/services/env.service.ts"
+        sh "rm ./src/services/env.service.qa.ts"
+        sh "rm ./src/services/env.service.dev.ts"
+        sh "mv ./src/services/env.service.prod.ts ./src/services/env.service.ts"   
+    }
+}
 stage('build') {
     node {
         sh '''npm run globals'''
         sh '''npm install'''
         sh '''npm run ionic:build'''
         sh "echo '' > ./www/cordova.js"
-    }
-}
-stage('update environment'){
-    node {
-        echo '@@@@ Setting Environment Variables File for PROD @@@@'
-        sh "rm ./www/assets/json/env.json"
-        sh "rm ./www/assets/json/env.qa.json"
-        sh "rm ./www/assets/json/env.dev.json"
-        sh "mv ./www/assets/json/env.prod.json ./www/assets/json/env.json"
     }
 }
 stage('deploy') {
