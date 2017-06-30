@@ -17,14 +17,14 @@ stage('update environment'){
         sh "rm -f ./www/assets/json/student-resources.json"
         sh "rm -f ./www/assets/json/student-resources.dev.json"
         sh "rm -f ./www/assets/json/student-resources.qa.json"
-        sh '''if [ -f "./www/assets/json/student-resources.prod.json"]; then mv ./www/assets/json/student-resources.prod.json ./www/assets/json/student-resources.json; fi'''
+        sh "mv ./www/assets/json/student-resources.prod.json ./www/assets/json/student-resources.json 2>/dev/null"
         sh "rm -f ./www/assets/json/env.json"
         sh "rm -f ./www/assets/json/env.qa.json"
         sh "rm -f ./www/assets/json/env.dev.json"
-        sh '''if [ -f "./www/assets/json/env.prod.json"]; then mv ./www/assets/json/env.prod.json ./www/assets/json/env.json; fi'''
+        sh "mv ./www/assets/json/env.prod.json ./www/assets/json/env.json 2>/dev/null"
         sh "rm -f ./www/assets/json/settings.json"
         sh "rm -f ./www/assets/json/settings.local.json"
-        sh '''if [ -f "./www/assets/json/settings.aws.json"]; then mv ./www/assets/json/settings.aws.json ./www/assets/json/settings.json; fi'''
+        sh "mv ./www/assets/json/settings.aws.json ./www/assets/json/settings.json 2>/dev/null"
     }
 }
 stage('deploy') {
