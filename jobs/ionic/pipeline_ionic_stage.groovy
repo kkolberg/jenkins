@@ -4,6 +4,15 @@ stage('fetch') {
         sh '''git checkout tags/$TAG'''
     }
 }
+stage('update environment service'){
+    node {
+        echo '@@@@ Setting Environment Variables File for PROD @@@@'
+        sh "rm ./src/services/env.service.ts"
+        sh "rm ./src/services/env.service.dev.ts"
+        sh "rm ./src/services/env.service.qa.ts"
+        sh "mv ./src/services/env.service.prod.ts ./src/services/env.service.ts"   
+    }
+}
 stage('build') {
     node {
         sh "npm run deps"
@@ -18,10 +27,6 @@ stage('update environment'){
         sh "rm -f ./www/assets/json/student-resources.dev.json"
         sh "rm -f ./www/assets/json/student-resources.qa.json"
         sh "mv ./www/assets/json/student-resources.prod.json ./www/assets/json/student-resources.json 2>/dev/null"
-        sh "rm -f ./www/assets/json/env.json"
-        sh "rm -f ./www/assets/json/env.qa.json"
-        sh "rm -f ./www/assets/json/env.dev.json"
-        sh "mv ./www/assets/json/env.prod.json ./www/assets/json/env.json 2>/dev/null"
         sh "rm -f ./www/assets/json/settings.json"
         sh "rm -f ./www/assets/json/settings.local.json"
         sh "mv ./www/assets/json/settings.aws.json ./www/assets/json/settings.json 2>/dev/null"
