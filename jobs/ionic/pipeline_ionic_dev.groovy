@@ -33,10 +33,6 @@ stage('code quality') {
 stage('update environment'){
     node {
         echo '@@@@ Setting Environment Variables File for DEV @@@@'
-        sh "rm ./www/assets/json/student-resources.json"
-        sh "rm ./www/assets/json/student-resources.qa.json"
-        sh "rm ./www/assets/json/student-resources.prod.json"
-        sh "mv ./www/assets/json/student-resources.dev.json ./www/assets/json/student-resources.json"
         sh "rm ./www/assets/json/settings.json"
         sh "rm ./www/assets/json/settings.local.json"
         sh "mv ./www/assets/json/settings.aws.json ./www/assets/json/settings.json"
