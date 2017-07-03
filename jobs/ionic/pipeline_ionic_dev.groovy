@@ -7,6 +7,15 @@ stage('fetch') {
         }
     }
 }
+stage('update environment service'){
+    node {
+        echo '@@@@ Setting Environment Variables File for DEV @@@@'
+        sh "rm ./src/services/env.service.ts"
+        sh "rm ./src/services/env.service.qa.ts"
+        sh "rm ./src/services/env.service.prod.ts"
+        sh "mv ./src/services/env.service.dev.ts ./src/services/env.service.ts"   
+    }
+}
 stage('build') {
     node {
         sh "npm run deps"
@@ -28,10 +37,6 @@ stage('update environment'){
         sh "rm ./www/assets/json/student-resources.qa.json"
         sh "rm ./www/assets/json/student-resources.prod.json"
         sh "mv ./www/assets/json/student-resources.dev.json ./www/assets/json/student-resources.json"
-        sh "rm ./www/assets/json/env.json"
-        sh "rm ./www/assets/json/env.qa.json"
-        sh "rm ./www/assets/json/env.prod.json"
-        sh "mv ./www/assets/json/env.dev.json ./www/assets/json/env.json"
         sh "rm ./www/assets/json/settings.json"
         sh "rm ./www/assets/json/settings.local.json"
         sh "mv ./www/assets/json/settings.aws.json ./www/assets/json/settings.json"
